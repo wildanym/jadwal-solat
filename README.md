@@ -1,5 +1,8 @@
 # Jadwal Solat
 
+## API
+[api.myquran](https://api.myquran.com/)
+
 ## Build Setup
 
 ```bash
