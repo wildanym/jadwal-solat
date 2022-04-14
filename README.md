@@ -1,4 +1,4 @@
-# belajar-nuxt
+# Jadwal Solat
 
 ## Build Setup
 
