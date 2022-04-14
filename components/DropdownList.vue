@@ -7,7 +7,13 @@
         @click="visibility"
       >
         <span class="text-xs md:text-base">{{ city }}</span>
-        <img src="../assets/image/down.png" alt="down" class="w-4 h-4" />
+        <img
+          v-if="showDropList === false"
+          src="../assets/image/down.png"
+          alt="down"
+          class="w-4 h-4"
+        />
+        <img v-else src="../assets/image/up.png" alt="down" class="w-4 h-4" />
       </div>
       <div
         v-if="showDropList"
