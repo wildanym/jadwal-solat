@@ -59,8 +59,8 @@ export const actions = {
       .then((response) => {
         commit("setAllCity", response.data);
       })
-      .catch((response) => {
-        console.log(response.message);
+      .catch(() => {
+        console.error("Error");
       });
   },
   searchCity({ commit }, city) {
@@ -105,8 +105,8 @@ export const actions = {
         commit("setJadwalSebulan", newjadwalSebulan);
         commit("setCity", response.data.data.lokasi);
       })
-      .catch((response) => {
-        console.log(response.data.message);
+      .catch(() => {
+        console.error("Error");
       });
   },
   changeDisplayAll({ commit }, status) {
