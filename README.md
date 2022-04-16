@@ -1,10 +1,10 @@
 # Jadwal Solat
 
+## My simple app for learn nuxt.js
+Get Api from [api.myquran](https://api.myquran.com/)
+
 ## Demo
 [jadwal-solat](https://jadwal-solat.netlify.app/)
-
-## API
-[api.myquran](https://api.myquran.com/)
 
 ## Build Setup
 
