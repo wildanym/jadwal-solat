@@ -70,10 +70,17 @@ export const actions = {
     };
     axios(data)
       .then((response) => {
-        commit("setResult", response.data.data);
+        if (response.data.status) {
+          commit("setResult", response.data.data);
+        } else {
+          let data = {
+            data: response.data,
+          };
+          commit("setResult", data);
+        }
       })
-      .catch((response) => {
-        console.log(response.message);
+      .catch(() => {
+        console.error("Error");
       });
   },
   getPerMonth({ commit }, id) {
@@ -99,7 +106,7 @@ export const actions = {
         commit("setCity", response.data.data.lokasi);
       })
       .catch((response) => {
-        console.log(response.message);
+        console.log(response.data.message);
       });
   },
   changeDisplayAll({ commit }, status) {

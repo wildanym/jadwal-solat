@@ -1,6 +1,6 @@
 <template>
   <div class="flex flex-col relative">
-    <div class="flex flex-col w-72 mx-auto">
+    <div class="flex flex-col w-72 md:w-96 mx-auto">
       <div
         id="title"
         class="border-indigo-500 flex w-full justify-between items-center border-2 bg-white px-2 py-1 rounded-md cursor-pointer"
@@ -36,7 +36,7 @@
             <li
               v-for="(city, index) in allCity"
               :key="`${city} - ${index}`"
-              class="text-xs cursor-pointer font-roboto"
+              class="text-xs md:text-base cursor-pointer font-roboto"
               @click="getPerMonth(city.id), visibility()"
             >
               {{ city.lokasi }}
@@ -47,12 +47,14 @@
             class="h-40 overflow-y-scroll bg-white border border-gray-300 rounded-md p-1"
           >
             <li
-              v-for="(result, index) in searchResult"
+              v-for="(result, index) in JSON.parse(
+                JSON.stringify(searchResult)
+              )"
               :key="`${result} - ${index}`"
-              class="text-xs cursor-pointer font-roboto"
+              class="text-xs md:text-base cursor-pointer font-roboto"
               @click="getPerMonth(result.id), visibility()"
             >
-              {{ result.lokasi }}
+              {{ result.lokasi ? result.lokasi : result.message }}
             </li>
           </ul>
         </div>
