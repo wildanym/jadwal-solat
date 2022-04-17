@@ -1,9 +1,9 @@
 <template>
-  <div class="flex flex-col relative">
-    <div class="flex flex-col w-72 md:w-96 mx-auto">
+  <div class="relative z-50 flex flex-col">
+    <div class="flex flex-col mx-auto w-72 md:w-96">
       <div
         id="title"
-        class="border-indigo-500 flex w-full justify-between items-center border-2 bg-white px-2 py-1 rounded-md cursor-pointer"
+        class="flex items-center justify-between w-full px-2 py-1 bg-white border-2 border-indigo-500 rounded-md cursor-pointer"
         @click="visibility"
       >
         <span class="text-xs md:text-base">{{ city }}</span>
@@ -17,7 +17,7 @@
       </div>
       <div
         v-if="showDropList"
-        class="w-full absolute top-9 bg-white mt-1 rounded-md"
+        class="absolute w-full mt-1 bg-white rounded-md top-9"
       >
         <div class="px-2">
           <input
@@ -31,12 +31,12 @@
         <div class="p-2">
           <ul
             v-if="displayAll"
-            class="h-40 overflow-y-scroll bg-white border border-gray-300 rounded-md p-1"
+            class="h-40 p-1 overflow-y-scroll bg-white border border-gray-300 rounded-md"
           >
             <li
               v-for="(city, index) in allCity"
               :key="`${city} - ${index}`"
-              class="text-xs md:text-base cursor-pointer font-roboto"
+              class="text-xs cursor-pointer md:text-base font-roboto"
               @click="getPerMonth(city.id), visibility()"
             >
               {{ city.lokasi }}
@@ -44,14 +44,14 @@
           </ul>
           <ul
             v-else
-            class="h-40 overflow-y-scroll bg-white border border-gray-300 rounded-md p-1"
+            class="h-40 p-1 overflow-y-scroll bg-white border border-gray-300 rounded-md"
           >
             <li
               v-for="(result, index) in JSON.parse(
                 JSON.stringify(searchResult)
               )"
               :key="`${result} - ${index}`"
-              class="text-xs md:text-base cursor-pointer font-roboto"
+              class="text-xs cursor-pointer md:text-base font-roboto"
               @click="getPerMonth(result.id), visibility()"
             >
               {{ result.lokasi ? result.lokasi : result.message }}
@@ -76,7 +76,6 @@ export default {
     ...mapGetters({
       allCity: "allCity",
       city: "city",
-      jadwal: "jadwal",
       searchResult: "searchResult",
       displayAll: "displayAll",
       showDropList: "showDropList",

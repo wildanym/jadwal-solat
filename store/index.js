@@ -4,33 +4,19 @@ export const state = () => ({
   searchResult: [],
   allCity: [],
   cities: {},
-  jadwal: {
-    tanggal: "",
-    imsak: "",
-    subuh: "",
-    dzuhur: "",
-    ashar: "",
-    maghrib: "",
-    isya: "",
-  },
   jadwalSebulan: [],
   city: "",
   displayAll: true,
   showDropList: false,
+  bukaPuasa: {
+    tanggal: "",
+    maghrib: "",
+  },
 });
 
 export const mutations = {
   setAllCity: (state, palyload) => {
     state.allCity = palyload;
-  },
-  setJadwal: (state, payload) => {
-    state.jadwal.tanggal = payload.tanggal;
-    state.jadwal.imsak = payload.imsak;
-    state.jadwal.subuh = payload.subuh;
-    state.jadwal.dzuhur = payload.dzuhur;
-    state.jadwal.ashar = payload.ashar;
-    state.jadwal.maghrib = payload.maghrib;
-    state.jadwal.isya = payload.isya;
   },
   setJadwalSebulan: (state, payload) => {
     state.jadwalSebulan = payload;
@@ -46,6 +32,10 @@ export const mutations = {
   },
   setShowDropList: (state, payload) => {
     state.showDropList = payload;
+  },
+  setBukaPuasa: (state, payload) => {
+    state.bukaPuasa.tanggal = payload.tanggal;
+    state.bukaPuasa.maghrib = payload.maghrib + ":00";
   },
 };
 
@@ -104,6 +94,12 @@ export const actions = {
         const newjadwalSebulan = jadwal.map(selectFewerProps);
         commit("setJadwalSebulan", newjadwalSebulan);
         commit("setCity", response.data.data.lokasi);
+
+        const index = new Date().getDate() - 1;
+        commit("setBukaPuasa", {
+          tanggal: newjadwalSebulan[index].tanggal,
+          maghrib: newjadwalSebulan[index].maghrib,
+        });
       })
       .catch(() => {
         console.error("Error");
@@ -119,10 +115,10 @@ export const actions = {
 
 export const getters = {
   allCity: (state) => state.allCity,
-  jadwal: (state) => state.jadwal,
   jadwalSebulan: (state) => state.jadwalSebulan,
   city: (state) => state.city,
   searchResult: (state) => state.searchResult,
   displayAll: (state) => state.displayAll,
   showDropList: (state) => state.showDropList,
+  bukaPuasa: (state) => state.bukaPuasa,
 };

@@ -1,18 +1,35 @@
 <template>
   <div
-    class="max-w-72 md:w-auto rounded-lg overflow-hidden mt-6 overflow-x-auto md:overflow-hidden mb-8"
+    class="relative mt-8 mb-8 overflow-hidden overflow-x-auto rounded-lg max-w-72 md:w-auto md:overflow-hidden"
     @click="changeShowDropList(false)"
   >
-    <span
-      v-for="(value, index) in jadwalSebulan"
-      :key="`${value} - ${index}`"
-      v-if="index === thisDay - 1"
-      class="mb-2 inline-block text-white text-sm md:text-base"
-      >{{ value.tanggal }}</span
+    <div
+      class="inline-block px-2 py-1 mb-2 text-xs rounded-lg bg-thead md:text-base"
     >
-    <div class="rounded-lg overflow-hidden">
+      <span>{{ currentDate }}</span>
+    </div>
+    <div class="absolute top-0.5 right-0">
+      <div
+        v-if="this.jam === 0 && this.menit === 0 && this.detik === 0"
+        class="inline-block px-2 py-1 mb-2 text-xs text-white bg-green-400 rounded-lg md:text-base"
+      >
+        <span>Selamat Berbuka Puasa</span>
+      </div>
+      <div v-else class="flex">
+        <div class="px-2 py-1 mb-2 text-xs rounded-l-lg bg-thead md:text-base">
+          <span>Menuju Buka Puasa</span>
+        </div>
+        <div
+          class="w-24 px-2 py-1 mb-2 text-xs text-center text-white bg-green-400 rounded-r-lg md:text-base"
+        >
+          <span>{{ jam }} : {{ menit }} : {{ detik }}</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="overflow-hidden rounded-lg">
       <table class="mx-auto">
-        <thead class="bg-thead border-b-2 border-gray-300">
+        <thead class="border-b-2 border-gray-300 bg-thead">
           <tr>
             <th class="thead-style">Tgl</th>
             <th class="thead-style">Imsak</th>
@@ -65,20 +82,76 @@
 import { mapGetters, mapActions } from "vuex";
 export default {
   name: "TableJadwal",
+  data() {
+    return {
+      jam: "",
+      menit: "",
+      detik: "",
+      tgl: "",
+      bln: "",
+      thn: "",
+    };
+  },
   computed: {
     ...mapGetters({
       jadwalSebulan: "jadwalSebulan",
       showDropList: "showDropList",
+      bukaPuasa: "bukaPuasa",
     }),
     thisDay() {
       const tgl = new Date();
       return tgl.getDate();
+    },
+    currentDate() {
+      const nameMonth = [
+        "Januari",
+        "Februari",
+        "Maret",
+        "April",
+        "Mei",
+        "Juni",
+        "Juli",
+        "Agustus",
+        "September",
+        "Oktober",
+        "November",
+        "Desember",
+      ];
+      return `${this.bukaPuasa.tanggal.split(",")[0]}, ${this.tgl} ${
+        nameMonth[parseInt(this.bln) - 1]
+      } ${this.thn} `;
     },
   },
   methods: {
     ...mapActions({
       changeShowDropList: "changeShowDropList",
     }),
+    setCountDown() {
+      const splitDate = this.bukaPuasa.tanggal.split(" ")[1].split("/");
+      this.tgl = splitDate[0];
+      this.bln = splitDate[1];
+      this.thn = splitDate[2];
+
+      const future = Date.parse(
+        `${this.bln}/${this.tgl}/${this.thn}, ${this.bukaPuasa.maghrib}`
+      );
+      const now = new Date();
+      const diff = future - now;
+      const hours = Math.floor(diff / (1000 * 60 * 60));
+      const mins = Math.floor(diff / (1000 * 60));
+      const secs = Math.floor(diff / 1000);
+
+      this.jam = hours;
+      this.menit = mins - hours * 60;
+      this.detik = secs - mins * 60;
+    },
+    countDown() {
+      setInterval(this.setCountDown, 1000);
+    },
+  },
+  updated() {
+    this.setCountDown();
+    this.countDown();
   },
 };
 </script>
