@@ -15,9 +15,10 @@
         />
         <img v-else src="../assets/image/up.png" alt="down" class="w-4 h-4" />
       </div>
-      <div>
+      <div class="flex items-center gap-1 mt-0.5">
         <input
           type="checkbox"
+          class="h-3"
           v-model="statusDefault"
           @change="setDefaultCity"
         /><span class="text-xs text-white md:text-sm">
@@ -26,7 +27,7 @@
       </div>
       <div
         v-if="showDropList"
-        class="absolute w-full bg-white rounded-md md:mt-1 top-9"
+        class="absolute w-full bg-white rounded-md md:mt-1 md:top-9 top-8"
       >
         <div class="px-2">
           <input
