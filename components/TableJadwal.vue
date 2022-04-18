@@ -22,7 +22,7 @@
           <span>Menuju Buka Puasa</span>
         </div>
         <div
-          class="w-16 px-1 py-1 mb-2 text-xs text-center text-white bg-green-400 rounded-r-lg md:w-24 md:text-base"
+          class="px-1 py-1 mb-2 text-xs text-center text-white bg-green-400 rounded-r-lg w-countdown md:w-24 md:text-base"
         >
           <span>{{ jam }} : {{ menit }} : {{ detik }}</span>
         </div>
@@ -129,15 +129,14 @@ export default {
       changeShowDropList: "changeShowDropList",
     }),
     setCountDown() {
-      const splitDate = this.bukaPuasa.tanggal.split(" ")[1].split("/");
-      this.tgl = splitDate[0];
-      this.bln = splitDate[1];
-      this.thn = splitDate[2];
+      const now = new Date();
+      this.tgl = now.getDate();
+      this.bln = now.getMonth() + 1;
+      this.thn = now.getFullYear();
 
       const future = Date.parse(
         `${this.bln}/${this.tgl}/${this.thn}, ${this.bukaPuasa.maghrib}`
       );
-      const now = new Date();
       const diff = future - now;
       const hours = Math.floor(diff / (1000 * 60 * 60));
       const mins = Math.floor(diff / (1000 * 60));

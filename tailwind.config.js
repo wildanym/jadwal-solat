@@ -11,6 +11,9 @@ module.exports = {
         caveat: ["Caveat Brush", "cursive"],
         roboto: ["Roboto", "sans-serif"],
       },
+      spacing: {
+        countdown: "4.5rem",
+      },
     },
   },
   variants: {
