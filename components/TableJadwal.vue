@@ -10,7 +10,7 @@
     </div>
     <div class="absolute top-0.5 right-0">
       <div
-        v-if="this.jam === 0 && this.menit === 0 && this.detik === 0"
+        v-if="this.jam < 0"
         class="inline-block px-1.5 py-1 mb-2 text-xs text-white bg-green-400 rounded-lg md:text-base"
       >
         <span>Selamat Berbuka Puasa</span>

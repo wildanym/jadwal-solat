@@ -1,8 +1,9 @@
 <template>
-  <div class="w-full flex flex-col items-center">
+  <div class="flex flex-col items-center w-full">
     <Navbar />
     <DropdownList />
     <TableJadwal />
+    <Footer />
   </div>
 </template>
 

@@ -18,7 +18,7 @@
       <div class="flex items-center gap-1 mt-0.5">
         <input
           type="checkbox"
-          class="h-3"
+          class="h-3 check"
           v-model="statusDefault"
           @change="setDefaultCity"
         /><span class="text-xs text-white md:text-sm">
@@ -32,6 +32,7 @@
         <div class="px-2">
           <input
             type="text"
+            ref="cari"
             v-model="search"
             @keyup="searchCity(search), changeDisplayAll(false)"
             placeholder="Cari Kota"
@@ -110,6 +111,7 @@ export default {
     }),
     visibility() {
       this.changeShowDropList(!this.showDropList);
+      this.search = "";
       if (this.showDropList) {
         title.classList.replace("border-indigo-500", "border-yellow-500");
       } else {
@@ -141,8 +143,11 @@ export default {
     }
   },
   updated() {
-    if (this.search.length == 0) {
+    if (this.search.length === 0) {
       this.changeDisplayAll(true);
+    }
+    if (this.showDropList) {
+      this.$refs.cari.focus();
     }
   },
 };
