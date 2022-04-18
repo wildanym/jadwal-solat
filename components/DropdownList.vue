@@ -15,9 +15,18 @@
         />
         <img v-else src="../assets/image/up.png" alt="down" class="w-4 h-4" />
       </div>
+      <div>
+        <input
+          type="checkbox"
+          v-model="statusDefault"
+          @change="setDefaultCity"
+        /><span class="text-xs text-white md:text-sm">
+          Set kota sebagai default</span
+        >
+      </div>
       <div
         v-if="showDropList"
-        class="absolute w-full mt-1 bg-white rounded-md top-9"
+        class="absolute w-full bg-white rounded-md md:mt-1 top-9"
       >
         <div class="px-2">
           <input
@@ -37,7 +46,9 @@
               v-for="(city, index) in allCity"
               :key="`${city} - ${index}`"
               class="text-xs cursor-pointer md:text-base font-roboto"
-              @click="getPerMonth(city.id), visibility()"
+              @click="
+                getPerMonth(city.id), visibility(), (currentCityId = city.id)
+              "
             >
               {{ city.lokasi }}
             </li>
@@ -52,7 +63,11 @@
               )"
               :key="`${result} - ${index}`"
               class="text-xs cursor-pointer md:text-base font-roboto"
-              @click="getPerMonth(result.id), visibility()"
+              @click="
+                getPerMonth(result.id),
+                  visibility(),
+                  (currentCityId = result.id)
+              "
             >
               {{ result.lokasi ? result.lokasi : result.message }}
             </li>
@@ -70,6 +85,8 @@ export default {
     return {
       search: "",
       isVisible: false,
+      currentCityId: "",
+      statusDefault: false,
     };
   },
   computed: {
@@ -97,11 +114,30 @@ export default {
       } else {
         title.classList.replace("border-yellow-500", "border-indigo-500");
       }
+      if (this.currentCityId === localStorage.idKota) {
+        this.statusDefault = true;
+      } else {
+        this.statusDefault = false;
+      }
+    },
+    setDefaultCity() {
+      if (this.statusDefault) {
+        localStorage.setItem("idKota", this.currentCityId);
+      } else {
+        localStorage.removeItem("idKota");
+      }
     },
   },
   created() {
     this.getAllCity();
-    this.getPerMonth("1218");
+  },
+  mounted() {
+    if (localStorage.idKota) {
+      this.getPerMonth(localStorage.idKota);
+      this.statusDefault = true;
+    } else {
+      this.getPerMonth("1218");
+    }
   },
   updated() {
     if (this.search.length == 0) {
