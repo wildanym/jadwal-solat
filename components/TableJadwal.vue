@@ -4,23 +4,25 @@
     @click="changeShowDropList(false)"
   >
     <div
-      class="inline-block px-2 py-1 mb-2 text-xs rounded-lg bg-thead md:text-base"
+      class="inline-block px-1.5 py-1 mb-2 text-xs rounded-lg bg-thead md:text-base"
     >
       <span>{{ currentDate }}</span>
     </div>
     <div class="absolute top-0.5 right-0">
       <div
         v-if="this.jam === 0 && this.menit === 0 && this.detik === 0"
-        class="inline-block px-2 py-1 mb-2 text-xs text-white bg-green-400 rounded-lg md:text-base"
+        class="inline-block px-1.5 py-1 mb-2 text-xs text-white bg-green-400 rounded-lg md:text-base"
       >
         <span>Selamat Berbuka Puasa</span>
       </div>
       <div v-else class="flex">
-        <div class="px-2 py-1 mb-2 text-xs rounded-l-lg bg-thead md:text-base">
+        <div
+          class="px-1.5 py-1 mb-2 text-xs rounded-l-lg bg-thead md:text-base"
+        >
           <span>Menuju Buka Puasa</span>
         </div>
         <div
-          class="w-24 px-2 py-1 mb-2 text-xs text-center text-white bg-green-400 rounded-r-lg md:text-base"
+          class="w-16 px-1 py-1 mb-2 text-xs text-center text-white bg-green-400 rounded-r-lg md:w-24 md:text-base"
         >
           <span>{{ jam }} : {{ menit }} : {{ detik }}</span>
         </div>
